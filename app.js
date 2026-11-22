@@ -111,7 +111,7 @@ function initRoom(serial){
   }else{pageDeck.forEach(r=>r.load());}
   pageDeck[0]?.load();$("find").oninput=filterSheets;$("clear-find").onclick=()=>{$("find").value="";filterSheets();$("find").focus();};filterSheets();
   $("owner-menu").onclick=()=>{const panel=$("owner-panel");panel.hidden=!panel.hidden;$("owner-menu").setAttribute("aria-expanded",String(!panel.hidden));};
-  $("lock").onclick=lock;
+  $("lock").onclick=lock;initNav();
 }
 function openAt(index){
   if(!pageDeck[index])return;
@@ -205,4 +205,17 @@ function flashNote(text){
   if(!n){n=document.createElement("div");n.id="wm-note";n.setAttribute("role","status");document.body.append(n);}
   n.textContent=text;n.classList.add("show");
   clearTimeout(noteTimer);noteTimer=setTimeout(()=>n.classList.remove("show"),2600);
+}
+
+
+/* ---------- menu ☰ yang selalu tersedia ---------- */
+function initNav(){
+  const btn=$("nav-toggle"), panel=$("nav-panel");
+  if(!btn||!panel)return;
+  const set=open=>{panel.hidden=!open;btn.setAttribute("aria-expanded",String(open));document.body.classList.toggle("nav-open",open);};
+  btn.onclick=e=>{e.stopPropagation();set(panel.hidden);};
+  document.addEventListener("click",e=>{if(!panel.hidden&&!e.target.closest(".top"))set(false);});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden){e.preventDefault();set(false);}});
+  panel.addEventListener("click",e=>{if(e.target.closest("button,a"))setTimeout(()=>set(false),80);});
+  set(false);
 }
