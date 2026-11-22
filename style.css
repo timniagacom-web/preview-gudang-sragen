@@ -61,3 +61,9 @@
   #nav-panel .folio-search input{width:100%}
   #nav-panel #count{align-self:flex-end}
 }
+
+.rabnote{margin:0 0 18px;padding:13px 16px;border:1px solid var(--line);border-left:3px solid #ad712e;
+  background:#fdf8ef;border-radius:3px;display:grid;gap:7px;max-width:900px}
+.rabnote b{font-size:.95rem}
+.rabnote p{margin:0;font-size:.88rem;line-height:1.55;color:var(--mute)}
+.rabnote .quiet{justify-self:start;padding:7px 12px;font-size:.86rem;background:#fff}

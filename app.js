@@ -95,6 +95,15 @@ function initRoom(serial){
   for(const [g,group] of groups.entries()){
     const section=el("section","folio-group");section.id="kelompok-"+g;
     const heading=el("h2","",group.name);section.append(heading);
+    if(group.ids&&group.ids.includes("rab-info")){
+      const note=el("div","rabnote");
+      const b=el("b","","RAB disusun dalam dua versi.");
+      const p=el("p","","Versi A memakai harga satuan resmi Jawa Tengah (eRABe) sebagai acuan/batas atas; versi B memakai harga pasar Sragen sebagai target biaya realistis. Volume kedua versi sama (171 item). Versi B untuk negosiasi dan anggaran, versi A sebagai pembanding resmi. Rincian selisih ada pada lembar pertama di bawah.");
+      const go=el("button","quiet","Buka penjelasan");
+      go.type="button";
+      go.onclick=()=>{const rec=pageDeck.find(r=>r.page.asset==="rab-info-1");if(rec)openAt(rec.ordinal-1);};
+      note.append(b,p,go);section.append(note);
+    }
     for(const id of sheetOrder.filter(id=>group.ids.includes(id))){
       const doc=collection.find(d=>d.id===id);
       if(doc)doc.pages.forEach((page,i)=>section.append(createSheet(doc,page,i,serial)));
